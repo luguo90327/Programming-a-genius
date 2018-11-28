@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lx.dao.TbDepartmentMapper" >
+
+    <resultMap id="BaseResultMap" type="cn.lx.pojo.TbDepartment" >
+        <id column="deptId" property="deptid" jdbcType="INTEGER" />
+        <result column="deptname" property="deptname" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        deptId, deptname
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from tb_department
+        where deptId = #{deptid,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from tb_department
+        where deptId = #{deptid,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="cn.lx.pojo.TbDepartment" >
+        insert into tb_department (deptId, deptname)
+        values (#{deptid,jdbcType=INTEGER}, #{deptname,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="cn.lx.pojo.TbDepartment" >
+        insert into tb_department
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="deptid != null" >
+                deptId,
+            </if>
+            <if test="deptname != null" >
+                deptname,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="deptid != null" >
+                #{deptid,jdbcType=INTEGER},
+            </if>
+            <if test="deptname != null" >
+                #{deptname,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.lx.pojo.TbDepartment" >
+        update tb_department
+        <set >
+            <if test="deptname != null" >
+                deptname = #{deptname,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where deptId = #{deptid,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="cn.lx.pojo.TbDepartment" >
+        update tb_department
+        set deptname = #{deptname,jdbcType=VARCHAR}
+        where deptId = #{deptid,jdbcType=INTEGER}
+    </update>
+</mapper>
